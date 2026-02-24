@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../../lib/db';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export function Login() {
     const [email, setEmail] = useState('');
@@ -8,6 +8,8 @@ export function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const returnUrl = searchParams.get('returnUrl') || '/';
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,7 +30,7 @@ export function Login() {
                     setError(error.message);
                 }
             } else {
-                navigate('/');
+                navigate(returnUrl);
             }
         } catch (err: any) {
             console.error('Login exception:', err);

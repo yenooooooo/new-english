@@ -6,8 +6,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { setUser, setLoading } = useAuthStore();
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        supabase.auth.getSession().then(({ data: { session }, error }) => {
+            if (error) {
+                console.error('Failed to get session:', error.message);
+            }
             setUser(session?.user ?? null);
+            setLoading(false);
+        }).catch((err) => {
+            console.error('getSession exception:', err);
             setLoading(false);
         });
 

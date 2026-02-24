@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/db';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +9,13 @@ export function Register() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => navigate('/login'), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [success, navigate]);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,7 +33,6 @@ export function Register() {
                 setError(error.message);
             } else {
                 setSuccess(true);
-                setTimeout(() => navigate('/login'), 3000);
             }
         } catch (err: any) {
             console.error('Register exception:', err);
