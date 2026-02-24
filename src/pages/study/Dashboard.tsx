@@ -28,15 +28,22 @@ export function Dashboard() {
                 .eq('user_id', user?.id)
                 .single();
 
-            if (!error && data) {
+            if (error) {
+                console.error('❌ Supabase 오류:', error.message, error.code);
+                console.error('테이블: user_progress');
+                console.error('User ID:', user?.id);
+                // 테이블이 없거나 RLS 오류인 경우 기본값 사용
+                setStats({ words_learned: 0, streak_days: 0, total_minutes: 0 });
+            } else if (data) {
                 setStats({
                     words_learned: data.words_learned || 0,
                     streak_days: data.streak_days || 0,
                     total_minutes: data.total_minutes || 0,
                 });
             }
-        } catch (e) {
-            console.error('Error fetching stats:', e);
+        } catch (e: any) {
+            console.error('❌ 통신 오류:', e.message);
+            setStats({ words_learned: 0, streak_days: 0, total_minutes: 0 });
         } finally {
             setLoading(false);
         }
