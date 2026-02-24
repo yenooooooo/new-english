@@ -22,7 +22,11 @@ export function Login() {
 
             if (error) {
                 console.error('Login error:', error);
-                setError(error.message);
+                if (error.message === 'Email not confirmed') {
+                    setError('이메일 인증이 필요합니다. 가입하신 이메일의 수신함을 확인하여 인증 링크를 클릭해주세요. (만약 인증을 없애고 싶다면 Supabase 대시보드에서 Email Confirmations 옵션을 꺼주세요)');
+                } else {
+                    setError(error.message);
+                }
             } else {
                 navigate('/');
             }
