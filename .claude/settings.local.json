@@ -5,7 +5,9 @@
       "Bash(npm install:*)",
       "Bash(npm run:*)",
       "Bash(git add:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(cd /c/Users/ailee/github/yeonho && export PYTHONIOENCODING=utf-8 && export VITE_SUPABASE_URL=https://taywwplbmbfeqpafcjef.supabase.co && export SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRheXd3cGxibWJmZXFwYWZjamVmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTkzMDg3MywiZXhwIjoyMDg3NTA2ODczfQ.t126Jo0KqP8vZxzmbgtpTgjYRM3_WIdgeO3f0kMUhtI' && python3 << 'EOF'\nfrom supabase import create_client\nimport os\n\nsupabase = create_client\\(os.getenv\\('VITE_SUPABASE_URL'\\), os.getenv\\('SUPABASE_KEY'\\)\\)\n\n# collocations 테이블 구조 확인\nresult = supabase.table\\('collocations'\\).select\\('*'\\).limit\\(1\\).execute\\(\\)\nprint\\(\"✅ Collocations 테이블 컬럼:\"\\)\nif result.data:\n    print\\(f\"컬럼: {list\\(result.data[0].keys\\(\\)\\)}\"\\)\nelse:\n    print\\(\"\\(비어있음\\)\"\\)\n\n# shadowing_sentences 테이블 구조 확인\nresult = supabase.table\\('shadowing_sentences'\\).select\\('*'\\).limit\\(1\\).execute\\(\\)\nprint\\(\"\\\\n✅ Shadowing Sentences 테이블 컬럼:\"\\)\nif result.data:\n    print\\(f\"컬럼: {list\\(result.data[0].keys\\(\\)\\)}\"\\)\nelse:\n    print\\(\"\\(비어있음\\)\"\\)\nEOF)",
+      "Bash(cd:*\\\\)"
     ]
   }
 }
