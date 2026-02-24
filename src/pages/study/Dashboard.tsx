@@ -84,9 +84,9 @@ export function Dashboard() {
         .select('*')
         .eq('user_id', user?.id)
         .eq('mission_date', today)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') {
+      if (error) {
         throw error;
       }
 
@@ -134,11 +134,10 @@ export function Dashboard() {
             return (
               <div
                 key={idx}
-                className={`w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${
-                  isLearned
+                className={`w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${isLearned
                     ? 'bg-emerald-500/30 border border-emerald-500 text-emerald-400'
                     : 'bg-slate-800 border border-slate-700 text-slate-500 opacity-50'
-                }`}
+                  }`}
                 title={dateStr}
               >
                 {date.getDate()}

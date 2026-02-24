@@ -189,9 +189,9 @@ export default async function handler(req: any, res: any) {
         .from('user_progress')
         .select('*')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
 
-      if (getError && getError.code === 'PGRST116') {
+      if (!progress && !getError) {
         // Create default user_progress for new user
         const { data: newProgress, error: createError } = await supabase
           .from('user_progress')
