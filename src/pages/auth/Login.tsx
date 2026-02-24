@@ -41,10 +41,10 @@ export function Login() {
         <div className="w-full max-w-md p-8 space-y-8 bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700 shadow-2xl">
             <div>
                 <h2 className="text-3xl font-extrabold text-center text-white tracking-tight">
-                    Welcome Back
+                    다시 환영합니다
                 </h2>
                 <p className="mt-2 text-center text-slate-400">
-                    Continue your English journey
+                    영어 학습을 계속하세요
                 </p>
             </div>
 
@@ -57,27 +57,27 @@ export function Login() {
 
                 <div className="space-y-4">
                     <div>
-                        <label htmlFor="email" className="sr-only">Email address</label>
+                        <label htmlFor="email" className="sr-only">이메일 주소</label>
                         <input
                             id="email"
                             name="email"
                             type="email"
                             required
                             className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-white placeholder-slate-500"
-                            placeholder="Email address"
+                            placeholder="이메일 주소"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="sr-only">Password</label>
+                        <label htmlFor="password" className="sr-only">비밀번호</label>
                         <input
                             id="password"
                             name="password"
                             type="password"
                             required
                             className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-white placeholder-slate-500"
-                            placeholder="Password"
+                            placeholder="비밀번호"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -89,7 +89,7 @@ export function Login() {
                     disabled={loading}
                     className="w-full py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {loading ? 'Signing in...' : 'Sign in'}
+                    {loading ? '로그인 중...' : '로그인'}
                 </button>
             </form >
         </div >

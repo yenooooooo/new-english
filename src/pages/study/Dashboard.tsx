@@ -54,10 +54,10 @@ export function Dashboard() {
         <div className="w-full max-w-4xl mx-auto space-y-8">
             <div>
                 <h2 className="text-3xl font-extrabold text-white tracking-tight">
-                    Your Dashboard
+                    내 대시보드
                 </h2>
                 <p className="mt-2 text-slate-400">
-                    Track your progress and pick up where you left off.
+                    학습 진행 상황을 확인하고 이전에 중단한 부분부터 시작하세요.
                 </p>
             </div>
 
@@ -69,7 +69,7 @@ export function Dashboard() {
                             <span className="text-2xl">🔥</span>
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-slate-400">Day Streak</p>
+                            <p className="text-sm font-medium text-slate-400">연속 학습일</p>
                             <h3 className="text-2xl font-bold text-white">{stats.streak_days}</h3>
                         </div>
                     </div>
@@ -81,7 +81,7 @@ export function Dashboard() {
                             <span className="text-2xl">📚</span>
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-slate-400">Words Learned</p>
+                            <p className="text-sm font-medium text-slate-400">학습한 단어</p>
                             <h3 className="text-2xl font-bold text-white">{stats.words_learned}</h3>
                         </div>
                     </div>
@@ -93,24 +93,24 @@ export function Dashboard() {
                             <span className="text-2xl">⏱️</span>
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-slate-400">Time Spent</p>
-                            <h3 className="text-2xl font-bold text-white">{stats.total_minutes}m</h3>
+                            <p className="text-sm font-medium text-slate-400">학습 시간</p>
+                            <h3 className="text-2xl font-bold text-white">{stats.total_minutes}분</h3>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Recommended Actions */}
-            <h3 className="text-xl font-bold text-white mt-8 mb-4">Recommended for You</h3>
+            <h3 className="text-xl font-bold text-white mt-8 mb-4">추천 학습</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Link to="/vocabulary" className="group relative overflow-hidden bg-slate-800/80 backdrop-blur-md p-6 rounded-2xl border border-slate-700 hover:border-indigo-500 transition-all">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span className="text-6xl">📖</span>
                     </div>
-                    <h4 className="text-lg font-bold text-indigo-400 group-hover:text-indigo-300">Daily Vocabulary</h4>
-                    <p className="text-sm text-slate-400 mt-2">15 words waiting for review</p>
+                    <h4 className="text-lg font-bold text-indigo-400 group-hover:text-indigo-300">일일 어휘</h4>
+                    <p className="text-sm text-slate-400 mt-2">검토 대기 중인 15개 단어</p>
                     <div className="mt-4 inline-flex items-center text-sm font-medium text-indigo-400">
-                        Start Review &rarr;
+                        복습 시작 &rarr;
                     </div>
                 </Link>
 
@@ -118,10 +118,10 @@ export function Dashboard() {
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span className="text-6xl">🤖</span>
                     </div>
-                    <h4 className="text-lg font-bold text-pink-400 group-hover:text-pink-300">AI Teacher</h4>
-                    <p className="text-sm text-slate-400 mt-2">Practice daily conversation</p>
+                    <h4 className="text-lg font-bold text-pink-400 group-hover:text-pink-300">AI 선생님</h4>
+                    <p className="text-sm text-slate-400 mt-2">일상 회화 연습하기</p>
                     <div className="mt-4 inline-flex items-center text-sm font-medium text-pink-400">
-                        Start Chat &rarr;
+                        채팅 시작 &rarr;
                     </div>
                 </Link>
 
@@ -129,10 +129,10 @@ export function Dashboard() {
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span className="text-6xl">🧩</span>
                     </div>
-                    <h4 className="text-lg font-bold text-orange-400 group-hover:text-orange-300">Collocations</h4>
-                    <p className="text-sm text-slate-400 mt-2">Learn words that naturally go together</p>
+                    <h4 className="text-lg font-bold text-orange-400 group-hover:text-orange-300">연어 학습</h4>
+                    <p className="text-sm text-slate-400 mt-2">자연스럽게 함께 쓰이는 단어 배우기</p>
                     <div className="mt-4 inline-flex items-center text-sm font-medium text-orange-400">
-                        Start Practice &rarr;
+                        연습 시작 &rarr;
                     </div>
                 </Link>
 
@@ -140,10 +140,10 @@ export function Dashboard() {
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span className="text-6xl">🗣️</span>
                     </div>
-                    <h4 className="text-lg font-bold text-emerald-400 group-hover:text-emerald-300">Shadowing</h4>
-                    <p className="text-sm text-slate-400 mt-2">Practice speaking like a native</p>
+                    <h4 className="text-lg font-bold text-emerald-400 group-hover:text-emerald-300">섀도잉</h4>
+                    <p className="text-sm text-slate-400 mt-2">원어민처럼 발음하기 연습</p>
                     <div className="mt-4 inline-flex items-center text-sm font-medium text-emerald-400">
-                        Start Practice &rarr;
+                        연습 시작 &rarr;
                     </div>
                 </Link>
 
@@ -151,10 +151,10 @@ export function Dashboard() {
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span className="text-6xl">🌍</span>
                     </div>
-                    <h4 className="text-lg font-bold text-blue-400 group-hover:text-blue-300">Translate</h4>
-                    <p className="text-sm text-slate-400 mt-2">Get accurate, natural translations</p>
+                    <h4 className="text-lg font-bold text-blue-400 group-hover:text-blue-300">번역</h4>
+                    <p className="text-sm text-slate-400 mt-2">정확하고 자연스러운 번역 받기</p>
                     <div className="mt-4 inline-flex items-center text-sm font-medium text-blue-400">
-                        Open Translator &rarr;
+                        번역 열기 &rarr;
                     </div>
                 </Link>
             </div>
