@@ -39,8 +39,12 @@ export function Register() {
         return (
             <div className="w-full max-w-md p-8 text-center space-y-4 bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700">
                 <h2 className="text-2xl font-bold text-green-400">Registration Successful!</h2>
-                <p className="text-slate-300">Please check your email to verify your account.</p>
-                <p className="text-sm text-slate-400">Redirecting to login...</p>
+                <p className="text-slate-300">✓ Account created successfully!</p>
+                <p className="text-sm text-slate-400">
+                    If you need to confirm your email, check your inbox.<br/>
+                    Otherwise, you can log in directly.
+                </p>
+                <p className="text-xs text-slate-500">Redirecting to login...</p>
             </div>
         );
     }
