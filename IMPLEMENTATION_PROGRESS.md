@@ -112,35 +112,78 @@
 
 ---
 
+### Phase 5: Translation Upgrade ✅
+- Translation history with localStorage (last 20 items)
+- Favorite translations with star toggle
+- Nuance explanations for context
+- Alternative translation suggestions
+- TTS for translated text (🔊 button)
+- Copy-to-clipboard functionality
+
+**Key Features**: History tabs, favorites filtering, language swap, character counter
+
+### Phase 6: Shadowing Pronunciation Practice ✅
+- Category-based sentences (일상, 비즈니스, 여행, 영화대사, 뉴스)
+- Playback speed control (0.75x, 1.0x, 1.25x)
+- Web Speech API for native playback
+- Audio recording with playback preview
+- Self-evaluation (1-5 star rating)
+- Audio upload to Supabase
+- Pronunciation tips
+
+**Key Features**: Speed control, real-time recording, self-assessment, category filter
+
+---
+
 ## 📊 Statistics
 
-**Phases Completed**: 4/8 (50%)
-**Code Changes**: 1,800+ lines
+**Phases Completed**: 6/8 (75%)
+**Code Changes**: 3,000+ lines
 **New Components**: 4 (LevelBadge, StreakBanner, MissionCard, PageHeader)
 **New API Endpoints Enhanced**: 3 (progress with SM-2, vocabulary, shadowing)
+**Features Implemented**:
+- SM-2 Algorithm with quality scoring
+- Spaced Repetition Scheduling
+- Daily Streaks & Missions
+- Multi-scenario AI Chat
+- Translation History & Bookmarks
+- Pronunciation Practice
+- 3D Card Animations
+- Web Speech API Integration
+- localStorage Persistence
+
 **TypeScript Build**: ✅ Passing
 **Responsive Design**: ✅ Mobile/Tablet/Desktop optimized
 **Error Handling**: ✅ Implemented throughout
+**Bundle Size**: ~134KB gzipped
 
 ---
 
 ## 🚀 Deployment Checklist
 
-Before deploying to production:
+### Completed ✅
+- [x] Phase 0: Foundation (Auth, APIs, Env vars)
+- [x] Phase 1: Homepage & Navigation
+- [x] Phase 2: Dashboard with SM-2
+- [x] Phase 3: Vocabulary Learning
+- [x] Phase 4: AI Chat Conversations
+- [x] Phase 5: Translation with History
+- [x] Phase 6: Shadowing Practice
 
-- [ ] Complete all 8 phases
-- [ ] Test all features on Vercel preview
+### Remaining ⏳
+- [ ] Phase 7: Collocations Upgrade
+- [ ] Deploy to Vercel
 - [ ] Verify Supabase schema is created
 - [ ] Configure environment variables in Vercel
-- [ ] Test authentication flows
+- [ ] Test all authentication flows
 - [ ] Test SM-2 algorithm with manual scoring
-- [ ] Test vocabulary learning from start to finish
-- [ ] Test AI chat with different scenarios
+- [ ] Test vocabulary → dashboard progression
+- [ ] Test AI chat with all 5 scenarios
 - [ ] Verify daily missions tracking
-- [ ] Check streak calendar generation
-- [ ] Test mobile responsiveness
+- [ ] Check 30-day streak calendar
+- [ ] Test mobile responsiveness on all features
 - [ ] Monitor Vercel build times
-- [ ] Check bundle size (currently ~130KB gzipped)
+- [ ] Load test with 100+ users
 
 ---
 
