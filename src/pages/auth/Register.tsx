@@ -15,16 +15,22 @@ export function Register() {
         setLoading(true);
         setError(null);
 
-        const { error } = await supabase.auth.signUp({
-            email,
-            password,
-        });
+        try {
+            const { error } = await supabase.auth.signUp({
+                email,
+                password,
+            });
 
-        if (error) {
-            setError(error.message);
-        } else {
-            setSuccess(true);
-            setTimeout(() => navigate('/login'), 3000);
+            if (error) {
+                console.error('Register error:', error);
+                setError(error.message);
+            } else {
+                setSuccess(true);
+                setTimeout(() => navigate('/login'), 3000);
+            }
+        } catch (err: any) {
+            console.error('Register exception:', err);
+            setError(err.message || 'An unexpected error occurred');
         }
         setLoading(false);
     };

@@ -14,15 +14,21 @@ export function Login() {
         setLoading(true);
         setError(null);
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
 
-        if (error) {
-            setError(error.message);
-        } else {
-            navigate('/');
+            if (error) {
+                console.error('Login error:', error);
+                setError(error.message);
+            } else {
+                navigate('/');
+            }
+        } catch (err: any) {
+            console.error('Login exception:', err);
+            setError(err.message || 'An unexpected error occurred');
         }
         setLoading(false);
     };
