@@ -46,22 +46,65 @@ export function Dashboard() {
 
   const fetchProgress = async () => {
     try {
-      const response = await fetch(`/api/progress?user_id=${user?.id}`, {
-        method: 'GET',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch progress');
+      if (!user?.id) {
+        console.log('⚠️ No user ID, skipping progress fetch');
+        setLoading(false);
+        return;
       }
 
-      const data = await response.json();
-      setStats({
-        words_learned: data.words_learned || 0,
-        streak_days: data.streak_days || 0,
-        total_minutes: data.total_minutes || 0,
-        xp: data.xp || 0,
-        current_level: data.current_level || 'A1',
-      });
+      console.log('📊 Fetching progress from Supabase for user:', user.id);
+
+      // Try to get existing progress
+      const { data: progress, error } = await supabase
+        .from('user_progress')
+        .select('*')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('❌ Progress query error:', error.message);
+        throw error;
+      }
+
+      if (!progress) {
+        console.log('📝 Creating new user_progress for:', user.id);
+        // Create default user_progress for new user
+        const { data: newProgress, error: createError } = await supabase
+          .from('user_progress')
+          .insert({
+            user_id: user.id,
+            words_learned: 0,
+            streak_days: 0,
+            total_minutes: 0,
+            xp: 0,
+            current_level: 'A1',
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('❌ Create progress error:', createError.message);
+          throw createError;
+        }
+
+        console.log('✅ Created new progress:', newProgress);
+        setStats({
+          words_learned: newProgress?.words_learned || 0,
+          streak_days: newProgress?.streak_days || 0,
+          total_minutes: newProgress?.total_minutes || 0,
+          xp: newProgress?.xp || 0,
+          current_level: newProgress?.current_level || 'A1',
+        });
+      } else {
+        console.log('✅ Found existing progress:', progress);
+        setStats({
+          words_learned: progress.words_learned || 0,
+          streak_days: progress.streak_days || 0,
+          total_minutes: progress.total_minutes || 0,
+          xp: progress.xp || 0,
+          current_level: progress.current_level || 'A1',
+        });
+      }
     } catch (error: any) {
       console.error('❌ Failed to fetch progress:', error.message);
       setStats({
@@ -78,27 +121,38 @@ export function Dashboard() {
 
   const fetchMissions = async () => {
     try {
+      if (!user?.id) {
+        console.log('⚠️ No user ID, skipping missions fetch');
+        return;
+      }
+
       const today = new Date().toISOString().split('T')[0];
+      console.log('📋 Fetching missions for user:', user.id, 'date:', today);
+
       const { data, error } = await supabase
         .from('daily_missions')
         .select('*')
-        .eq('user_id', user?.id)
+        .eq('user_id', user.id)
         .eq('mission_date', today)
         .maybeSingle();
 
       if (error) {
-        throw error;
+        console.error('❌ Daily missions error:', error.message, error.code);
+        return;
       }
 
       if (data) {
+        console.log('✅ Found missions:', data);
         setMissions({
           vocab_done: data.vocab_done || false,
           chat_done: data.chat_done || false,
           translate_done: data.translate_done || false,
         });
+      } else {
+        console.log('📝 No missions found for today');
       }
     } catch (error: any) {
-      console.error('Failed to fetch missions:', error.message);
+      console.error('❌ Missions fetch error:', error.message);
     }
   };
 

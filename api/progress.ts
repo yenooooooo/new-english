@@ -184,6 +184,8 @@ export default async function handler(req: any, res: any) {
         return res.status(400).json({ error: 'Missing user_id query parameter' });
       }
 
+      console.log('📊 Fetching progress for user:', userId);
+
       // Get or create user_progress
       let { data: progress, error: getError } = await supabase
         .from('user_progress')
@@ -191,7 +193,13 @@ export default async function handler(req: any, res: any) {
         .eq('user_id', userId)
         .maybeSingle();
 
-      if (!progress && !getError) {
+      if (getError) {
+        console.error('❌ Failed to get user_progress:', getError.message);
+        return res.status(500).json({ error: `Query failed: ${getError.message}` });
+      }
+
+      if (!progress) {
+        console.log('📝 Creating new user_progress for:', userId);
         // Create default user_progress for new user
         const { data: newProgress, error: createError } = await supabase
           .from('user_progress')
@@ -207,20 +215,20 @@ export default async function handler(req: any, res: any) {
           .single();
 
         if (createError) {
-          console.error('Failed to create user_progress:', createError);
-          return res.status(500).json({ error: 'Failed to initialize user progress' });
+          console.error('❌ Failed to create user_progress:', createError.message);
+          return res.status(500).json({ error: `Create failed: ${createError.message}` });
         }
 
         progress = newProgress;
-      } else if (getError) {
-        console.error('Failed to get user_progress:', getError);
-        return res.status(500).json({ error: 'Failed to fetch progress' });
+        console.log('✅ Created new progress:', progress);
+      } else {
+        console.log('✅ Found existing progress:', progress);
       }
 
       return res.status(200).json(progress);
     } catch (error: any) {
-      console.error('Progress GET Error:', error);
-      return res.status(500).json({ error: 'Failed to fetch progress' });
+      console.error('❌ Progress GET Error:', error);
+      return res.status(500).json({ error: `Exception: ${error.message}` });
     }
   }
 

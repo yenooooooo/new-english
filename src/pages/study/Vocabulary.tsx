@@ -82,22 +82,85 @@ export function Vocabulary() {
     try {
       if (user) {
         const currentWord = filteredWords[currentIndex];
-        const response = await fetch('/api/progress', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            user_id: user.id,
-            word_id: currentWord.id,
-            quality: quality, // 1=어려움, 3=보통, 5=쉬움
-          }),
+
+        console.log('📝 Recording word review:', {
+          user_id: user.id,
+          word_id: currentWord.id,
+          quality: quality,
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to update progress');
+        // Create or update word_reviews record
+        const { data: existing, error: checkError } = await supabase
+          .from('word_reviews')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('word_id', currentWord.id)
+          .maybeSingle();
+
+        if (checkError && checkError.code !== 'PGRST116') {
+          console.error('❌ Check error:', checkError);
+          throw checkError;
+        }
+
+        // Simple SM-2 calculation (local)
+        let newInterval = 1;
+        let newEaseFactor = 2.5;
+        let newRepetitions = 0;
+
+        if (existing) {
+          newRepetitions = existing.repetitions || 0;
+          newEaseFactor = existing.ease_factor || 2.5;
+
+          if (quality < 3) {
+            // Failed - reset
+            newInterval = 1;
+            newRepetitions = 0;
+          } else {
+            // Success - increase interval
+            newRepetitions += 1;
+            if (newRepetitions === 1) {
+              newInterval = 1;
+            } else if (newRepetitions === 2) {
+              newInterval = 3;
+            } else {
+              newInterval = Math.round((existing.interval || 1) * newEaseFactor);
+            }
+            // Adjust ease factor
+            newEaseFactor = Math.max(1.3, newEaseFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)));
+          }
+        }
+
+        const nextReviewDate = new Date();
+        nextReviewDate.setDate(nextReviewDate.getDate() + newInterval);
+
+        // Update or insert
+        const { error: saveError } = await supabase
+          .from('word_reviews')
+          .upsert({
+            user_id: user.id,
+            word_id: currentWord.id,
+            interval: newInterval,
+            repetitions: newRepetitions,
+            ease_factor: parseFloat(newEaseFactor.toFixed(2)),
+            next_review: nextReviewDate.toISOString().split('T')[0],
+            last_reviewed: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          }, {
+            onConflict: 'user_id,word_id',
+          });
+
+        if (saveError) {
+          console.error('❌ Save review error:', saveError.message);
+        } else {
+          console.log('✅ Review saved:', {
+            interval: newInterval,
+            easeFactor: newEaseFactor,
+            repetitions: newRepetitions,
+          });
         }
       }
     } catch (error: any) {
-      console.error('Failed to record progress:', error);
+      console.error('❌ Failed to record progress:', error.message);
     }
 
     nextWord();
